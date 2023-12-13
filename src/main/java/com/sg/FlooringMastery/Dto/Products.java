@@ -4,7 +4,31 @@ import java.math.BigDecimal;
 
 public class Products {
 
-    String ProductType;
-    BigDecimal CostPerSquareFoot;
-    BigDecimal LaborCostPerSquareFoot;
+    private String ProductType;
+    private BigDecimal CostPerSquareFoot;
+    private BigDecimal LaborCostPerSquareFoot;
+
+    public String getProductType() {
+        return ProductType;
+    }
+
+    public BigDecimal getCostPerSquareFoot() {
+        return CostPerSquareFoot;
+    }
+
+    public BigDecimal getLaborCostPerSquareFoot() {
+        return LaborCostPerSquareFoot;
+    }
+
+    public void setProductType(String productType) {
+        ProductType = productType;
+    }
+
+    public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
+        CostPerSquareFoot = costPerSquareFoot;
+    }
+
+    public void setLaborCostPerSquareFoot(BigDecimal laborCostPerSquareFoot) {
+        LaborCostPerSquareFoot = laborCostPerSquareFoot;
+    }
 }

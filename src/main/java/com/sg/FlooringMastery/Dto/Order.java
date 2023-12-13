@@ -1,22 +1,9 @@
 package com.sg.FlooringMastery.Dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Order {
-    /*
-OrderNumber – Integer
-CustomerName – String
-State – String
-TaxRate – BigDecimal
-ProductType – String
-Area – BigDecimal
-CostPerSquareFoot – BigDecimal
-LaborCostPerSquareFoot – BigDecimal
-MaterialCost – BigDecimal
-LaborCost – BigDecimal
-Tax – BigDecimal
-Total – BigDecimal
-     */
     private int OrderNumber;
     private String CustomerName;
 
@@ -32,12 +19,9 @@ Total – BigDecimal
 
     private BigDecimal LaborCostPerSquareFoot;
 
-    private BigDecimal MaterialCost;
-    private BigDecimal LaborCost;
-    private BigDecimal Tax;
-    private BigDecimal Total;
-
     public Order(int OrderNumber){ this.OrderNumber = OrderNumber; }
+
+    public  Order(){}
 
     public int getOrderNumber() {
         return OrderNumber;
@@ -67,7 +51,6 @@ Total – BigDecimal
         State = state;
     }
 
-    //dont think we set tax rate
     public BigDecimal getTaxRate() {
         return TaxRate;
     }
@@ -89,7 +72,7 @@ Total – BigDecimal
     }
 
     public BigDecimal getLaborCost() {
-        return LaborCost;
+        return Area.multiply(LaborCostPerSquareFoot);
     }
 
     public BigDecimal getLaborCostPerSquareFoot() {
@@ -97,42 +80,27 @@ Total – BigDecimal
     }
 
     public BigDecimal getMaterialCost() {
-        return MaterialCost;
+        return Area.multiply(CostPerSquareFoot);
     }
 
     public BigDecimal getTax() {
-        return Tax;
+        return getLaborCost().add(getMaterialCost()).multiply(TaxRate.divide(new BigDecimal(100), RoundingMode.HALF_DOWN)) ;
     }
 
     public BigDecimal getTotal() {
-        return Total;
+        return getLaborCost().add(getMaterialCost().add(getTax()));
     }
 
     public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
         CostPerSquareFoot = costPerSquareFoot;
     }
 
-    public void setLaborCost(BigDecimal laborCost) {
-        LaborCost = laborCost;
-    }
-
     public void setLaborCostPerSquareFoot(BigDecimal laborCostPerSquareFoot) {
         LaborCostPerSquareFoot = laborCostPerSquareFoot;
-    }
-
-    public void setMaterialCost(BigDecimal materialCost) {
-        MaterialCost = materialCost;
     }
 
     public void setOrderNumber(int orderNumber) {
         OrderNumber = orderNumber;
     }
 
-    public void setTotal(BigDecimal total) {
-        Total = total;
-    }
-
-    public void setTax(BigDecimal tax) {
-        Tax = tax;
-    }
 }
