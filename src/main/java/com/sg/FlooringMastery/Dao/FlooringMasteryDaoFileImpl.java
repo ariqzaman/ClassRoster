@@ -36,13 +36,14 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         try {
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader("Taxes.txt")));
+                            new FileReader("Data/Taxes.txt")));
         } catch (FileNotFoundException e) {
             throw new FlooringMasteryPersistenceException(
                     "-_- Could not load Taxes into memory.", e);
         }
         String currentLine;
         Tax currentTax;
+        scanner.nextLine();
         while (scanner.hasNextLine()) {
             currentLine = scanner.nextLine();
             currentTax = unmarshallTax(currentLine);
@@ -71,13 +72,14 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         try {
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader("Products.txt")));
+                            new FileReader("Data/Products.txt")));
         } catch (FileNotFoundException e) {
             throw new FlooringMasteryPersistenceException(
                     "-_- Could not load Products into memory.", e);
         }
         String currentLine;
         Products currentProduct;
+        scanner.nextLine();
         while (scanner.hasNextLine()) {
             currentLine = scanner.nextLine();
             currentProduct = unmarshallProduct(currentLine);
