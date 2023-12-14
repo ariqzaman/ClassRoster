@@ -1,8 +1,12 @@
 package com.sg.FlooringMastery.Dao;
 
 import com.sg.FlooringMastery.Dto.Order;
+import com.sg.FlooringMastery.Dto.Products;
+import com.sg.FlooringMastery.Dto.Tax;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface FlooringMasteryDao {
 
@@ -13,7 +17,6 @@ public interface FlooringMasteryDao {
      * The system should generate an order number for the user based on the next available order # (so if there are two orders and the max order number is 4,
      * the next order number should be 5).
      *
-     * @param OrderDate Must be in the future
      * @param CustomerName May not be blank and is limited to characters [a-z][0-9] as well as periods and comma characters. "Acme, Inc." is a valid name.
      * @param State – Entered states must be checked against the tax file. If the state does not exist in the tax file, we cannot sell there. If the tax file is modified to include the state, it should be allowed without changing the application code.
      * @param ProductType Show a list of available products and pricing information to choose from. Again, if a product is added to the file it should show up in the application without a code change.
@@ -21,8 +24,7 @@ public interface FlooringMasteryDao {
      * @return order that was just made
      * @throws FlooringMasteryPersistenceException
      */
-
-    Order addOrder(String OrderDate, String CustomerName, String State, String ProductType, BigDecimal Area)
+    Order addOrder(String CustomerName, String State, String ProductType, BigDecimal Area)
             throws FlooringMasteryPersistenceException;
 
     /**
@@ -35,25 +37,32 @@ public interface FlooringMasteryDao {
      * ProductType
      * Area
      *
-     * @param OrderDate Must be in the future
      * @param OrderNumber May not be blank and is limited to characters [a-z][0-9] as well as periods and comma characters. "Acme, Inc." is a valid name.
+     * @param order May not be blank and is limited to characters [a-z][0-9] as well as periods and comma characters. "Acme, Inc." is a valid name.
      * @return order that was just made
      * @throws FlooringMasteryPersistenceException
      */
 
-    Order editOrder(String OrderDate, int OrderNumber)
-            throws FlooringMasteryPersistenceException;
+    Order replaceOrder(int OrderNumber, Order order)
+            throws FlooringMasteryPersistenceException, IOException;
 
     /**
      * For removing an order, the system should ask for the date and order number.
      * If it exists, the system should display the order information and prompt the user if they are sure. If yes, it should be removed from the list.
      *
-     * @param OrderDate Must be in the future
+
      * @param OrderNumber May not be blank and is limited to characters [a-z][0-9] as well as periods and comma characters. "Acme, Inc." is a valid name.
      * @return removed order
      * @throws FlooringMasteryPersistenceException
      */
-    Order removeOrder(String OrderDate, int OrderNumber)
+    Order removeOrder(int OrderNumber)
             throws FlooringMasteryPersistenceException;
 
+
+
+    List<Tax> getTaxes() throws FlooringMasteryPersistenceException;
+
+    List<Products> getProducts() throws FlooringMasteryPersistenceException;
+
+    String getOrderDateFile(String date);
 }
