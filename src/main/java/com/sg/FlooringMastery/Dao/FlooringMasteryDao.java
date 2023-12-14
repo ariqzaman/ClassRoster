@@ -1,8 +1,11 @@
 package com.sg.FlooringMastery.Dao;
 
 import com.sg.FlooringMastery.Dto.Order;
+import com.sg.FlooringMastery.Dto.Products;
+import com.sg.FlooringMastery.Dto.Tax;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface FlooringMasteryDao {
 
@@ -56,4 +59,7 @@ public interface FlooringMasteryDao {
     Order removeOrder(String OrderDate, int OrderNumber)
             throws FlooringMasteryPersistenceException;
 
+    List<Tax> getTaxes() throws FlooringMasteryPersistenceException;
+
+    List<Products> getProducts() throws FlooringMasteryPersistenceException;
 }
