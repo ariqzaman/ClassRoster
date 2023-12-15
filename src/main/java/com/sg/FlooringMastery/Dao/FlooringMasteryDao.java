@@ -58,8 +58,6 @@ public interface FlooringMasteryDao {
     Order removeOrder(int OrderNumber)
             throws FlooringMasteryPersistenceException;
 
-
-
     List<Tax> getTaxes() throws FlooringMasteryPersistenceException;
 
     List<Products> getProducts() throws FlooringMasteryPersistenceException;

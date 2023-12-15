@@ -1,6 +1,8 @@
 package com.sg.FlooringMastery.service;
 
 import com.sg.FlooringMastery.Dao.FlooringMasteryDao;
+import com.sg.FlooringMastery.Dao.FlooringMasteryDaoFileImpl;
+
 import com.sg.FlooringMastery.Dao.FlooringMasteryPersistenceException;
 import com.sg.FlooringMastery.Dto.Order;
 import com.sg.FlooringMastery.Dto.Products;
@@ -14,6 +16,10 @@ import java.util.regex.Pattern;
 
 public class FlooringMasteryServiceLayerImpl implements FlooringMasteryServiceLayer {
     FlooringMasteryDao dao;
+
+    FlooringMasteryServiceLayerImpl() {
+        this.dao = new FlooringMasteryDaoFileImpl();
+    }
 
     @Override
     public Order updateNewOrderWithCustomerName(Order order, String name) throws CustomerNameInvalidException {
@@ -43,7 +49,7 @@ public class FlooringMasteryServiceLayerImpl implements FlooringMasteryServiceLa
 
     @Override
     public Order updateNewOrderWithProductType(Order order, String productType) throws ProductTypeNotAvailableException, FlooringMasteryPersistenceException {
-        if (!dao.getProducts().stream().filter(product -> product.equals(product.getProductType())).toList().isEmpty()) {
+        if (!dao.getProducts().stream().filter(product -> productType.equals(product.getProductType())).toList().isEmpty()) {
             order.setProductType(productType);
             return order;
         } else {
