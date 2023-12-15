@@ -11,6 +11,7 @@ public interface FlooringMasteryServiceLayer {
     public Order updateNewOrderWithProductType(Order order, String product) throws ProductTypeNotAvailableException, FlooringMasteryPersistenceException;
     public Order updateNewOrderWithArea(Order order, BigDecimal area) throws MinimumOrderAreaNotMetException;
     public Order confirmOrder(Order order);
+    public Order removeOrder(int orderNum) throws FlooringMasteryPersistenceException;
 
 
 }
