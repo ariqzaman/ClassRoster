@@ -9,6 +9,8 @@ package com.sg.FlooringMastery.ui;
  * May your view be ever in your favor!
  * @author ahill
  */
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class UserIOConsoleImpl implements UserIO {
@@ -171,6 +173,43 @@ public class UserIOConsoleImpl implements UserIO {
 
         return result;
     }
+
+
+    @Override
+    public BigDecimal readBigDecimal(String msgPrompt) {
+        while (true) {
+            try {
+                return new BigDecimal(this.readString(msgPrompt));
+            } catch (NumberFormatException e) {
+                this.print("Input error. Please try again.");
+            }
+        }
+
+    }
+    public BigDecimal readBigDecimal(String msgPrompt, BigDecimal min, BigDecimal max) {
+        BigDecimal result;
+        do {
+            result = readBigDecimal(msgPrompt);
+        } while (result.compareTo(min) < 0 || result.compareTo(max) > 0);
+        return result;
+    }
+    public LocalDate readLocalDate(String msgPrompt) {
+        while (true) {
+            try {
+                return LocalDate.parse(this.readString(msgPrompt));
+            } catch (NumberFormatException e) {
+                this.print("Input error. Please try again.");
+            }
+        }
+    }
+    public LocalDate readLocalDate(String msgPrompt, LocalDate min, LocalDate max) {
+        LocalDate result;
+        do {
+            result = readLocalDate(msgPrompt);
+        } while (result.compareTo(min) < 0 || result.compareTo(max) > 0);
+        return result;
+    }
+
 
     /**
      *
