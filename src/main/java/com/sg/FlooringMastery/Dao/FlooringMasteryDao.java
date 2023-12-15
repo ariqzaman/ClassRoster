@@ -63,4 +63,6 @@ public interface FlooringMasteryDao {
     List<Products> getProducts() throws FlooringMasteryPersistenceException;
 
     String getOrderDateFile(String date);
+
+    boolean fileExists(String date);
 }

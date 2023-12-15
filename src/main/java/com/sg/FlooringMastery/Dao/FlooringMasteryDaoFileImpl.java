@@ -10,20 +10,12 @@ import java.io.FileReader;
 import java.math.BigDecimal;
 import java.util.*;
 
-import com.sg.FlooringMastery.service.FlooringMasteryServiceLayerImpl;
-
 import java.io.*;
-import java.nio.file.Path;
-import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
-    private final String ROSTER_FILE;
+    private String ROSTER_FILE;
     private int autoIncrement = 1;
 
     public static final String DELIMITER = ",";
@@ -31,6 +23,8 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     public FlooringMasteryDaoFileImpl(String rosterTextFile){
         ROSTER_FILE = rosterTextFile;
     }
+
+    public FlooringMasteryDaoFileImpl(){}
     Map<Integer, Order> orders = new HashMap<>();
 
     @Override
@@ -68,80 +62,9 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         return removedOrder;
     }
 
-    @Override
-    public List<Tax> getTaxes() throws FlooringMasteryPersistenceException {
-        List<Tax> taxes = new ArrayList<>();
-        Scanner scanner;
-
-        try {
-            scanner = new Scanner(
-                    new BufferedReader(
-                            new FileReader("Data/Taxes.txt")));
-        } catch (FileNotFoundException e) {
-            throw new FlooringMasteryPersistenceException(
-                    "-_- Could not load Taxes into memory.", e);
-        }
-        String currentLine;
-        Tax currentTax;
-        scanner.nextLine();
-        while (scanner.hasNextLine()) {
-            currentLine = scanner.nextLine();
-            currentTax = unmarshallTax(currentLine);
-            taxes.add(currentTax);
-        }
-        scanner.close();
-        return taxes;
-    }
-
-    @Override
-    public List<Products> getProducts() throws FlooringMasteryPersistenceException {
-        List<Products> products = new ArrayList<>();
-        Scanner scanner;
-
-        try {
-            scanner = new Scanner(
-                    new BufferedReader(
-                            new FileReader("Data/Products.txt")));
-        } catch (FileNotFoundException e) {
-            throw new FlooringMasteryPersistenceException(
-                    "-_- Could not load Products into memory.", e);
-        }
-        String currentLine;
-        Products currentProduct;
-        scanner.nextLine();
-        while (scanner.hasNextLine()) {
-            currentLine = scanner.nextLine();
-            currentProduct = unmarshallProduct(currentLine);
-            products.add(currentProduct);
-        }
-        scanner.close();
-        return products;
-    }
 
 
-    private Tax unmarshallTax(String taxAsText) {
-        String[] taxTokens = taxAsText.split(",");
-        String stateAbbreviation = taxTokens[0];
-        String stateName = taxTokens[1];
-        String taxRate = taxTokens[2];
-        Tax taxFromFile = new Tax();
-        taxFromFile.setStateAbbreviation(stateAbbreviation);
-        taxFromFile.setStateName(stateName);
-        taxFromFile.setTaxRate(new BigDecimal(taxRate));
-        return taxFromFile;
-    }
 
-    private Products unmarshallProduct(String productAsText) {
-        String[] productTokens = productAsText.split(",");
-        String productType = productTokens[0];
-        String costPerSquareFoot = productTokens[1];
-        String laborCostPerSquareFoot = productTokens[2];
-        Products productFromFile = new Products();
-        productFromFile.setProductType(productType);
-        productFromFile.setCostPerSquareFoot(new BigDecimal(costPerSquareFoot));
-        productFromFile.setLaborCostPerSquareFoot(new BigDecimal(laborCostPerSquareFoot));
-        return productFromFile;
-    }
 
 
     //---------------------------------------------------------------------------------------
@@ -196,6 +119,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         return orderFromFile;
     }
 
+    @Override
     public List<Tax> getTaxes() throws FlooringMasteryPersistenceException {
         List<Tax> taxes = new ArrayList<>();
         Scanner scanner;
@@ -232,6 +156,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         return taxFromFile;
     }
 
+    @Override
     public List<Products> getProducts() throws FlooringMasteryPersistenceException {
         List<Products> products = new ArrayList<>();
         Scanner scanner;
@@ -384,5 +309,10 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         // Clean up
         out.close();
     }
+    public boolean fileExists(String date){
+        File tmpDir = new File("/Orders/", getOrderDateFile(date));
+        return tmpDir.exists();
+    }
+
 
 }

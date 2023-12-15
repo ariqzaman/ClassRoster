@@ -11,6 +11,7 @@ import com.sg.FlooringMastery.Dto.Tax;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -143,6 +144,11 @@ public class FlooringMasteryServiceLayerImpl implements FlooringMasteryServiceLa
             //return to menu
         }
         return orders;
+    }
+
+    @Override
+    public Order removeOrder(int orderNum) throws FlooringMasteryPersistenceException {
+        return dao.removeOrder(orderNum);
     }
 
 }

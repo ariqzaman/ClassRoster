@@ -1,6 +1,7 @@
 package com.sg.FlooringMastery.Controller;
 
 import com.sg.FlooringMastery.Dao.FlooringMasteryDao;
+import com.sg.FlooringMastery.Dao.FlooringMasteryPersistenceException;
 import com.sg.FlooringMastery.Dto.Order;
 import com.sg.FlooringMastery.service.FlooringMasteryServiceLayer;
 import com.sg.FlooringMastery.ui.FlooringMasterView;
@@ -89,13 +90,16 @@ public class FlooringMasteryController {
     private void removeOrder() {
         view.displayRemoveOrderBanner();
         int OrderNumber = Integer.parseInt(view.getOrderNumber());
-        try{
-            service.removeOrder(OrderDate, OrderNumber);
-            view.displayRemoveSuccessBanner();
-        }catch(FlooringMasteryDaoException e){
-            view.displayErrorMessage(e.getMessage());
-
+        //move check
+        if(dao.fileExists(dao.getOrderDateFile(view.getDate()))){
+            try{
+                service.removeOrder(OrderNumber);
+                view.displayRemoveSuccessBanner();
+            } catch (FlooringMasteryPersistenceException e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 
 }
