@@ -2,6 +2,7 @@ package com.sg.FlooringMastery.Dto;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 
 public class Order {
     private int OrderNumber;
@@ -18,6 +19,7 @@ public class Order {
     private BigDecimal CostPerSquareFoot;
 
     private BigDecimal LaborCostPerSquareFoot;
+    private LocalDate OrderDate;
 
     public Order(int OrderNumber){ this.OrderNumber = OrderNumber; }
 
@@ -103,4 +105,11 @@ public class Order {
         OrderNumber = orderNumber;
     }
 
+    public void setOrderDate(LocalDate orderDate) {
+        this.OrderDate = orderDate;
+    }
+
+    public LocalDate getOrderDate() {
+        return OrderDate;
+    }
 }
