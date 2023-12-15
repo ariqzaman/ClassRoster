@@ -4,6 +4,7 @@ import com.sg.FlooringMastery.Dao.FlooringMasteryPersistenceException;
 import com.sg.FlooringMastery.Dto.Order;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface FlooringMasteryServiceLayer {
     public Order updateNewOrderWithCustomerName(Order order, String name) throws CustomerNameInvalidException;
@@ -13,5 +14,5 @@ public interface FlooringMasteryServiceLayer {
     public Order confirmOrder(Order order);
     public Order removeOrder(int orderNum) throws FlooringMasteryPersistenceException;
 
-
+    public List<Order> getAllOrdersByDate(String date) throws FlooringMasteryPersistenceException;
 }

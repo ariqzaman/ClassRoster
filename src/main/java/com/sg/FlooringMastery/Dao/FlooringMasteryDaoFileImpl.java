@@ -25,7 +25,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     }
 
     public FlooringMasteryDaoFileImpl(){}
-    Map<Integer, Order> orders = new HashMap<>();
+    List<Order> orders = new ArrayList<>();
 
     @Override
     public Order addOrder(String CustomerName, String State, String ProductType, BigDecimal Area) throws FlooringMasteryPersistenceException {
@@ -34,7 +34,8 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     @Override
     public Order replaceOrder(int OrderNumber, Order order) throws FlooringMasteryPersistenceException, IOException {
-        return orders.put(OrderNumber, order);
+        orders.add(order);
+        return order;
     }
     @Override
     public String getOrderDateFile(String date) {
@@ -193,8 +194,16 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         return productFromFile;
     }
 
+    public List<Order> loadOrders(String filename) throws FlooringMasteryPersistenceException {
+        this.ROSTER_FILE = "Orders/" + filename;
+        loadRoster();
+        return orders;
+    }
+
     //LOAD
     private void loadRoster() throws FlooringMasteryPersistenceException {
+        System.out.println(this.ROSTER_FILE);
+
         Scanner scanner;
 
         try {
@@ -221,7 +230,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
             // We are going to use the order num as the map key for our student object.
             // Put currentOrder into the map using OrderNumber as the key
-            orders.put(currentOrder.getOrderNumber(), currentOrder);
+            orders.add(currentOrder);
         }
         // close scanner
         scanner.close();
@@ -297,7 +306,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         // we'll reuse it.
         String orderAsText;
         loadRoster();
-        List<Order> orderList = new ArrayList(orders.values());
+        List<Order> orderList = new ArrayList(orders);
         for (Order currentOrder : orderList) {
             // turn an order into a String
             orderAsText = marshallOrder(currentOrder);

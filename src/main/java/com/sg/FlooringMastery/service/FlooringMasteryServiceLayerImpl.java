@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class FlooringMasteryServiceLayerImpl implements FlooringMasteryServiceLayer {
     FlooringMasteryDao dao;
 
-    FlooringMasteryServiceLayerImpl() {
+    public FlooringMasteryServiceLayerImpl() {
         this.dao = new FlooringMasteryDaoFileImpl();
     }
 
@@ -149,6 +149,12 @@ public class FlooringMasteryServiceLayerImpl implements FlooringMasteryServiceLa
     @Override
     public Order removeOrder(int orderNum) throws FlooringMasteryPersistenceException {
         return dao.removeOrder(orderNum);
+    }
+
+    public List<Order> getAllOrdersByDate(String orderDate) throws FlooringMasteryPersistenceException {
+        String filename = dao.getOrderDateFile(orderDate);
+        List<Order> orders = dao.loadOrders(filename);
+        return orders;
     }
 
 }
