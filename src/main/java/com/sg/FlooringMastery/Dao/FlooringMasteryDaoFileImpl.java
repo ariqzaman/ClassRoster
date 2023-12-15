@@ -71,12 +71,11 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     //---------------------------------------------------------------------------------------
 
     private Order unmarshallOrder(String OrderAsText){
-
+        // 06012013
         String[] orderTokens = OrderAsText.split(DELIMITER);
-
         // Given the pattern above, the order number is in index 0 of the array.
         String orderNumber = orderTokens[0];
-
+        System.out.println(orderTokens[0]);
 
         Order orderFromFile = new Order(Integer.parseInt(orderNumber));
 
@@ -222,6 +221,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         // Go through ROSTER_FILE line by line, decoding each line into a
         // order object by calling the unmarshallOrder method.
         // Process while we have more lines in the file
+        scanner.nextLine();
         while (scanner.hasNextLine()) {
             // get the next line in the file
             currentLine = scanner.nextLine();

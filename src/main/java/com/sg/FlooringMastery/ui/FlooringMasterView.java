@@ -102,19 +102,19 @@ public String getDate(){
 }
 public void displayOrderList(List<Order> orderList){
     for(Order order : orderList){
-        String orderInfo = String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+        String orderInfo = String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                 order.getOrderNumber(),
                 order.getCustomerName(),
                 order.getState(),
-                order.getTaxRate(),
+                order.getTaxRate().toString(),
                 order.getProductType(),
-                order.getArea(),
-                order.getCostPerSquareFoot(),
-                order.getLaborCostPerSquareFoot(),
-                order.getMaterialCost(),
-                order.getLaborCost(),
-                order.getTax(),
-                order.getTotal());
+                order.getArea().toString(),
+                order.getCostPerSquareFoot().toString(),
+                order.getLaborCostPerSquareFoot().toString(),
+                order.getMaterialCost().toString(),
+                order.getLaborCost().toString(),
+                order.getTax().toString(),
+                order.getTotal().toString());
         io.print(orderInfo);
     }io.readString("Please hit enter to continue.");
 }
